@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
 
 import argparse
-import sys
 
 
 parser = argparse.ArgumentParser(description='Get the given characters '
-        'automatically for the dumbest 2 factor authentication ever.')
-parser.add_argument(
-        '-p',
-        '--passchars',
+                                 'automatically for the dumbest 2 factor '
+                                 'authentication ever.')
+required_arglist = parser.add_argument_group('Required arguments')
+required_arglist.add_argument(
+        '-p', '--passchars',
         type=str,
-        help='The character set from the email. Just copy and paste in '
-        'single quites as "-p \'Jelszó:  a   s   d   f   g   h   j   k   l\'"')
-parser.add_argument(
-        '-a',
-        '--authindicies',
+        required=True,
+        metavar='',
+        help='The character set from the email. Just copy and paste in single'
+        'quotes as "-p \'Jelszó:  a   s   d   f   g   h   j   k   l\'"')
+required_arglist.add_argument(
+        '-a', '--authindicies',
         type=str,
+        required=True,
+        metavar='',
         help='The required character indicies from the website. Copy and '
         'paste or type the comma separated list from the website e.g:'
         '"-a 1,2,3,4,5"')
