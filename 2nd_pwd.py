@@ -1,19 +1,42 @@
 #!/usr/bin/env python3
 
+import argparse
 import sys
 
-if __name__ == "__main__":
-    try:
-        passchars = sys.argv[1]
-        authchars = map(int, sys.argv[2:])
-    except IndexError:
-        print("No passchars or selected characters were given.")
-        print("usage: python 2nd_pwd.py <character set> <space separated "
-              "required characters>")
 
-    for ac in authchars:
-        print(passchars[ac],end="")
-    print("\n")
-    print("I hope I made your life somewhat easier by automatizing the "
-          "dumbest two factor authentication ever made. ")
+parser = argparse.ArgumentParser(description='Get the given characters '
+        'automatically for the dumbest 2 factor authentication ever.')
+parser.add_argument(
+        '-p',
+        '--passchars',
+        type=str,
+        help='The character set from the email. Just copy and paste in '
+        'single quites as "-p \'Jelszó:  a   s   d   f   g   h   j   k   l\'"')
+parser.add_argument(
+        '-a',
+        '--authindicies',
+        type=str,
+        help='The required character indicies from the website. Copy and '
+        'paste or type the comma separated list from the website e.g:'
+        '"-a 1,2,3,4,5"')
+args = parser.parse_args()
+
+
+def get_passchars(raw):
+    return list(filter(lambda c: c != "Jelszó:", raw.split()))
+
+
+def get_authindicies(raw):
+    return list(map(int, raw.split(',')))
+
+
+def get_authchars(passchars, indicies):
+    return ''.join(passchars[i-1] for i in indicies)
+
+
+if __name__ == "__main__":
+    passchars = get_passchars(args.passchars)
+    authindicies = get_authindicies(args.authindicies)
+
+    print(get_authchars(passchars, authindicies))
 
