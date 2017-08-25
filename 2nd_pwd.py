@@ -3,9 +3,9 @@
 import argparse
 
 
-parser = argparse.ArgumentParser(description='Get the given characters '
-                                 'automatically for the dumbest 2 factor '
-                                 'authentication ever.')
+parser = argparse.ArgumentParser(
+        description='Get the given characters automatically for the dumbest '
+        '2 factor authentication ever.')
 required_arglist = parser.add_argument_group('Required arguments')
 required_arglist.add_argument(
         '-p', '--passchars',
@@ -42,4 +42,3 @@ if __name__ == "__main__":
     authindicies = get_authindicies(args.authindicies)
 
     print(get_authchars(passchars, authindicies))
-
